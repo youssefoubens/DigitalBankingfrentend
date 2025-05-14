@@ -1,1 +1,25 @@
-<p>transaction-stats works!</p>
+<div class="chart-card">
+    <div class="chart-container">
+      <canvas 
+        baseChart
+        *ngIf="transactionStats$ | async as stats"
+        [data]="{
+          labels: stats.dates,
+          datasets: [
+            {
+              label: 'Deposits',
+              data: stats.deposits,
+              backgroundColor: '#2ecc71'
+            },
+            {
+              label: 'Withdrawals',
+              data: stats.withdrawals,
+              backgroundColor: '#e74c3c'
+            }
+          ]
+        }"
+        [type]="'bar'"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>

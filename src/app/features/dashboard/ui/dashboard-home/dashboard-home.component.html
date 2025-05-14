@@ -1,1 +1,24 @@
-<p>dashboard-home works!</p>
+<div class="dashboard-container">
+    <h1>Bank Dashboard</h1>
+    
+    <div class="summary-cards">
+      <app-card *ngIf="stats$ | async as stats" title="Total Balance" [value]="stats.totalBalance | currency">
+        <span [class.positive]="stats.balanceChange >= 0" [class.negative]="stats.balanceChange < 0">
+          {{ stats.balanceChange >= 0 ? '+' : '' }}{{ stats.balanceChange | percent }}
+        </span>
+      </app-card>
+  
+      <app-card *ngIf="stats$ | async as stats" title="Active Accounts" [value]="stats.activeAccounts">
+        <span>{{ stats.newAccounts }} new</span>
+      </app-card>
+  
+      <app-card *ngIf="stats$ | async as stats" title="Recent Transactions" [value]="stats.recentTransactions">
+        <span>{{ stats.pendingTransactions }} pending</span>
+      </app-card>
+    </div>
+  
+    <div class="charts-container">
+      <app-account-stats></app-account-stats>
+      <app-transaction-stats></app-transaction-stats>
+    </div>
+  </div>

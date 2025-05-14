@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+      <h3>{{ title }}</h3>
+      <span *ngIf="icon" class="material-icons-outlined">{{ icon }}</span>
+    </div>
+    
+    <div class="card-value">{{ value }}</div>
+    
+    <div *ngIf="trend" class="card-trend" [class.trend-up]="trend === 'up'" 
+                                       [class.trend-down]="trend === 'down'">
+      <span *ngIf="trend === 'up'" class="material-icons-outlined">trending_up</span>
+      <span *ngIf="trend === 'down'" class="material-icons-outlined">trending_down</span>
+      <span *ngIf="trendValue">{{ trendValue }}</span>
+    </div>
+    
+    <ng-content></ng-content>
+  </div>

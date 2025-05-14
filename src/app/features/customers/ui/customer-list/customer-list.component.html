@@ -1,1 +1,34 @@
-<p>customer-list works!</p>
+<div class="customer-list-container">
+    <div class="header">
+      <h2>Customer Management</h2>
+      <a routerLink="/customers/new" class="btn btn-primary">Add New Customer</a>
+    </div>
+  
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search customers...">
+    </div>
+  
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers$ | async | filter:searchTerm:'name'">
+          <td>{{ customer.id | shortenId }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone | phoneFormat }}</td>
+          <td class="actions">
+            <a [routerLink]="['/customers', customer.id]" class="btn btn-sm btn-info">Edit</a>
+            <button (click)="deleteCustomer(customer.id)" class="btn btn-sm btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

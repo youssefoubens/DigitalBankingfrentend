@@ -1,0 +1,52 @@
+.operation-list-container {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+    }
+
+    .operation-filters {
+        margin-bottom: 1rem;
+
+        select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    }
+
+    .operation-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .credit {
+            .credit-amount {
+                color: #2ecc71;
+                font-weight: 500;
+            }
+        }
+
+        .debit {
+            .debit-amount {
+                color: #e74c3c;
+                font-weight: 500;
+            }
+        }
+    }
+}

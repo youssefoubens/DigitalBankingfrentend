@@ -1,1 +1,39 @@
-<p>customer-form works!</p>
+<div class="customer-form-container">
+    <h2>{{ isEditMode ? 'Edit Customer' : 'Create New Customer' }}</h2>
+  
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" formControlName="name">
+        <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" 
+             class="error-message">
+          Name is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" 
+             class="error-message">
+          Valid email is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" formControlName="phone">
+        <div *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched" 
+             class="error-message">
+          Phone number is required
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="customerForm.invalid">
+          {{ isEditMode ? 'Update' : 'Create' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>

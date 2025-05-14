@@ -1,1 +1,33 @@
-<p>account-list works!</p>
+<div class="account-list-container">
+  <div class="header">
+    <h2>Bank Accounts</h2>
+    <a routerLink="/accounts/new" class="btn btn-primary">Create Account</a>
+  </div>
+
+  <table class="account-table">
+    <thead>
+      <tr>
+        <th>Account Number</th>
+        <th>Type</th>
+        <th>Balance</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let account of accounts$ | async">
+        <td>{{ account.accountNumber }}</td>
+        <td>{{ account.type }}</td>
+        <td [class.negative]="account.balance < 0">{{ account.balance | currency }}</td>
+        <td>
+          <span [class]="'status-badge ' + account.status.toLowerCase()">
+            {{ account.status }}
+          </span>
+        </td>
+        <td class="actions">
+          <a [routerLink]="['/accounts', account.id]" class="btn btn-sm btn-info">View</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

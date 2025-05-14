@@ -1,1 +1,22 @@
-<p>credit-form works!</p>
+<div class="operation-form">
+    <h3>Credit Account</h3>
+    
+    <form (ngSubmit)="submitCredit()">
+      <div class="form-group">
+        <label>Account ID</label>
+        <input [(ngModel)]="creditRequest.accountId" name="accountId" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Amount</label>
+        <input type="number" [(ngModel)]="creditRequest.amount" name="amount" required min="0.01" step="0.01">
+      </div>
+      
+      <div class="form-group">
+        <label>Description</label>
+        <input [(ngModel)]="creditRequest.description" name="description">
+      </div>
+      
+      <button type="submit">Process Credit</button>
+    </form>
+  </div>

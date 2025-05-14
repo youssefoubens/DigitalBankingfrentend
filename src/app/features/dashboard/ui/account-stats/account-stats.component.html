@@ -1,1 +1,22 @@
-<p>account-stats works!</p>
+<div class="chart-card">
+    <div class="chart-container">
+      <canvas 
+        baseChart
+        *ngIf="accountStats$ | async as stats"
+        [data]="{
+          labels: stats.map(item => item.type),
+          datasets: [{
+            data: stats.map(item => item.count),
+            backgroundColor: [
+              '#3498db',
+              '#2ecc71',
+              '#f39c12',
+              '#e74c3c'
+            ]
+          }]
+        }"
+        [type]="'doughnut'"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>

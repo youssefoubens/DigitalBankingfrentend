@@ -1,1 +1,38 @@
-<p>operation-list works!</p>
+<div class="operation-list-container">
+  <h2>Transaction History</h2>
+  
+  <div class="operation-filters">
+    <select>
+      <option>Last 30 days</option>
+      <option>Last 90 days</option>
+      <option>This year</option>
+    </select>
+  </div>
+
+  <table class="operation-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let op of operations" [class.credit]="op.type === 'CREDIT'" 
+                                      [class.debit]="op.type === 'DEBIT'">
+        <td>{{ op.timestamp | date:'mediumDate' }}</td>
+        <td>{{ op.description }}</td>
+        <td>
+          <span *ngIf="op.type === 'CREDIT'" class="credit-amount">
+            +{{ op.amount | currency }}
+          </span>
+          <span *ngIf="op.type === 'DEBIT'" class="debit-amount">
+            -{{ op.amount | currency }}
+          </span>
+        </td>
+        <td>{{ op.balanceAfter | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
