@@ -8,7 +8,8 @@ export interface BankAccount {
     createdAt: Date;
     customerId: string;
     customerName?: string;
-    overdraftLimit?: number;
+  overdraftLimit?: number;
+  lastActivity?: Date;
     lastTransactionDate?: Date;
     interestRate?: number; // For savings accounts
   }

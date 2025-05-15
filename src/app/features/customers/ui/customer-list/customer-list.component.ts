@@ -18,7 +18,7 @@ import { CustomerService } from '../../data-access/customer.service';
     FormsModule, 
     RouterLink,
     FilterPipe,
-    ShortenIdPipe,
+    
     PhoneFormatPipe
   ],
   templateUrl: './customer-list.component.html',
@@ -36,11 +36,14 @@ export class CustomerListComponent implements OnInit {
   ngOnInit(): void {
     // Use getAllCustomers instead of getCustomer
     this.customers$ = this.customerService.getAllCustomers();
+    this.customers$.subscribe(data => {
+      console.log(data); // 👈 logs the array of customers
+    });
   }
 
-  deleteCustomer(id: string | number) {
+  deleteCustomer(id: number) {
     if (confirm('Are you sure you want to delete this customer?')) {
-      this.customerService.deleteCustomer(id.toString()).subscribe({
+      this.customerService.deleteCustomer(id).subscribe({
         next: () => {
           // Refresh the customer list after successful deletion
           this.customers$ = this.customerService.getAllCustomers();

@@ -23,10 +23,12 @@ export class CustomerService {
   }
 
   updateCustomer(id: string, customerData: Partial<Customer>): Observable<Customer> {
+
     return this.http.put<Customer>(`${this.apiUrl}/${id}`, customerData);
   }
 
-  deleteCustomer(id: string): Observable<void> {
+  deleteCustomer(id: number): Observable<void> {
+    console.log("deleting customer number "+id)
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 

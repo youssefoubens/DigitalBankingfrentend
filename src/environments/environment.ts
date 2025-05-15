@@ -2,7 +2,7 @@ import { Environment } from './environment.interface';
 
 export const environment: Environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api', // Your Spring Boot backend URL
+  apiUrl: 'http://localhost:8085', // Your Spring Boot backend URL
   
   auth: {
     loginPath: '/auth/login',

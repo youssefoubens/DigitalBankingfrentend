@@ -1,33 +1,68 @@
+/* account-list.component.css */
 .account-list-container {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    .header {
-        color: #2c3e50;
-        margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
     }
 
-    .badge-current {
-        background-color: #3498db;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        color: white;
+.account-row {
+    transition: all 0.2s ease;
+}
+
+.account-row:hover {
+    transform: translateY(-1px);
+}
+
+.btn-group .btn {
+    transition: all 0.2s ease;
+}
+
+.btn-group .btn:hover {
+    transform: translateY(-1px);
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+    border-radius: 1rem;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.input-group {
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.pagination .page-link {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+}
+@media (max-width: 576px) {
+    .table-responsive {
+        border: 0;
     }
 
-    .badge-savings {
-        background-color: #2ecc71;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        color: white;
+    .btn-group {
+        display: flex;
+        justify-content: center;
     }
 
-    .table {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-        th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-        }
+    .input-group {
+        max-width: 100% !important;
     }
 }
