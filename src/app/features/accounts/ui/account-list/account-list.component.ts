@@ -1,3 +1,4 @@
+import { BankAccount } from "./../../../../shared/models/account.model";
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnInit {
-  accounts$!: Observable<any[]>;
+  accounts$!: Observable<BankAccount[]>;
 
   constructor(private accountService: AccountService) {}
 

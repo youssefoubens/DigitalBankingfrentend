@@ -19,13 +19,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of customers$ | async | filter:searchTerm:'name'">
+        <tr *ngFor="let customer of customers$! | async | filter:searchTerm:'name'">
           <td>{{ customer.id | shortenId }}</td>
           <td>{{ customer.name }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone | phoneFormat }}</td>
           <td class="actions">
-            <a [routerLink]="['/customers', customer.id]" class="btn btn-sm btn-info">Edit</a>
+            <a [routerLink]="['/customers', customer?.id]" class="btn btn-sm btn-info">Edit</a>
             <button (click)="deleteCustomer(customer.id)" class="btn btn-sm btn-danger">Delete</button>
           </td>
         </tr>

@@ -1,22 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'filter',
-  standalone: true
-})
+@Pipe({ name: 'filter', standalone: true })
 export class FilterPipe implements PipeTransform {
-
-  transform(items: any[], searchText: string, property: string): any[] {
+  transform(items: any[] | null | undefined, searchText: string, field: string): any[] {
+    // Handle null/undefined input
     if (!items) return [];
+    
+    // Handle empty search
     if (!searchText) return items;
     
-    searchText = searchText.toLowerCase();
-    
-    return items.filter(item => {
-      if (item && item[property]) {
-        return item[property].toLowerCase().includes(searchText);
-      }
-      return false;
-    });
+    // Perform filtering
+    return items.filter(item => 
+      item[field]?.toLowerCase().includes(searchText.toLowerCase())
+    );
   }
 }

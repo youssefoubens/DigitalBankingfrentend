@@ -1,11 +1,11 @@
 export interface DashboardStats {
-    totalBalance: number;
-    activeAccounts: number;
-    recentTransactions: number;
-    balanceChange: number;
-    newAccounts: number;
-    pendingTransactions: number;
-  }
+  totalBalance?: number;
+  balanceChange?: number;
+  activeAccounts?: number;
+  newAccounts?: number;
+  recentTransactions?: number;
+  pendingTransactions?: number;
+}
   
   export interface AccountStats {
     type: string;

@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CustomerService } from '../../data-access/customer.service';
+import { Customer } from '../../../../shared/models/customer.model';
+import { Observable } from 'rxjs';
+import { PhoneFormatPipe } from '../../../../shared/pipes/phone-format.pipe';
 
 
 @Component({
   selector: 'app-customer-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,PhoneFormatPipe],
   templateUrl: './customer-details.component.html',
   styleUrls: ['./customer-details.component.css']
 })
 export class CustomerDetailsComponent implements OnInit {
-  customer$: any;
+  customer$!: Observable<Customer>;
   
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +23,7 @@ export class CustomerDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.customer$! = this.customerService.getCustomer(this.route.snapshot.params['id']);
+    this.customer$ = this.customerService.getCustomer(this.route.snapshot.params['id']);
+    
   }
 }

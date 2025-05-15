@@ -23,4 +23,5 @@ export class DashboardService {
       params: { timeFrame }
     });
   }
+  
 }
