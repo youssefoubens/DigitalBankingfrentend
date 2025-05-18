@@ -13,7 +13,7 @@ export const environment: Environment = {
   endpoints: {
     accounts: '/comptes',
     customers: '/customers',
-    operations: '/operations',
+    operations: '/comptes',
     dashboard: '/dashboard/stats'
   },
 

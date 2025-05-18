@@ -15,6 +15,7 @@ import { Modal } from 'bootstrap';
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnInit {
+  totalPages = 1;
   Math = Math;
   accounts: BankAccount[] = [];
   filteredAccounts: BankAccount[] = [];
@@ -75,11 +76,14 @@ export class AccountListComponent implements OnInit {
         account.status.toLowerCase().includes(term)
       );
     }
+    
+    // Calculate total pages
+    this.totalPages = Math.ceil(this.filteredAccounts.length / this.itemsPerPage);
+    
     this.sortAccounts();
     this.currentPage = 1;
     this.updatePagedAccounts();
   }
-
   sort(column: string): void {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';

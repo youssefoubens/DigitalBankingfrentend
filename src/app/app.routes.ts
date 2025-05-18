@@ -28,9 +28,9 @@ export const routes: Routes = [
       { path: 'accounts', component: AccountListComponent },
       { path: 'accounts/:id', component: AccountDetailsComponent },
       
-      // // Operations
-      // { path: 'operations', component: OperationListComponent },
-      // { path: 'operations/:accountId', component: OperationListComponent },
+      // Operations
+      { path: 'operations', component: OperationListComponent },
+      { path: 'operations/:accountId', component: OperationListComponent },
       
       // // Dashboard
       { path: 'dashboard', component: DashboardHomeComponent },

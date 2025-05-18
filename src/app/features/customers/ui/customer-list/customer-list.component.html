@@ -1,15 +1,25 @@
 <div class="customer-list-container">
-    <div class="header">
-      <h2>Customer Management</h2>
-      <a routerLink="/customers/new" class="btn btn-primary">Add New Customer</a>
+  <div class="header d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Customer Management</h2>
+    <a routerLink="/customers/new" class="btn btn-primary">Add New Customer</a>
+  </div>
+
+  <div class="search-container mb-3">
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterCustomers()" 
+        placeholder="Search customers..."
+      >
     </div>
-  
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Search customers...">
-    </div>
-  
-    <table class="customer-table">
-      <thead>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover customer-table">
+      <thead class="table-light">
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -19,16 +29,86 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of customers$! | async | filter:searchTerm:'name'">
-          <td>{{ customer.customer_id  }}</td>
+        <tr *ngFor="let customer of pagedCustomers">
+          <td>{{ customer.customer_id }}</td>
           <td>{{ customer.name }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone | phoneFormat }}</td>
           <td class="actions">
-            <a [routerLink]="['/customers', customer?.customer_id]" class="btn btn-sm btn-info">Edit</a>
+            <a [routerLink]="['/customers', customer.customer_id]" class="btn btn-sm btn-info">Edit</a>
             <button (click)="deleteCustomer(customer.customer_id)" class="btn btn-sm btn-danger">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Empty state -->
+  <div *ngIf="filteredCustomers.length === 0" class="text-center py-5">
+    <i class="bi bi-people text-muted" style="font-size: 3rem;"></i>
+    <h4 class="mt-3">No customers found</h4>
+    <p class="text-muted" *ngIf="searchTerm">
+      No customers match your search for "{{ searchTerm }}". Try a different search term.
+    </p>
+    <p class="text-muted" *ngIf="!searchTerm">
+      You don't have any customers yet. Add your first customer to get started.
+    </p>
+    <a routerLink="/customers/new" class="btn btn-primary mt-2">
+      <i class="bi bi-plus-circle me-1"></i> Add Customer
+    </a>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-3 d-flex justify-content-center" *ngIf="filteredCustomers.length > itemsPerPage">
+    <nav aria-label="Page navigation">
+      <ul class="pagination mb-0">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        
+        <!-- First page -->
+        <li class="page-item" [class.active]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(1)">1</a>
+        </li>
+        
+        <!-- Show ellipsis if needed before current page -->
+        <li class="page-item disabled" *ngIf="currentPage - 2 > 1">
+          <span class="page-link">...</span>
+        </li>
+        
+        <!-- Previous page if not first or second -->
+        <li class="page-item" *ngIf="currentPage - 1 > 1 && currentPage - 1 < totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)">{{currentPage - 1}}</a>
+        </li>
+        
+        <!-- Current page if not first or last -->
+        <li class="page-item active" *ngIf="currentPage > 1 && currentPage < totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage)">{{currentPage}}</a>
+        </li>
+        
+        <!-- Next page if not last or second last -->
+        <li class="page-item" *ngIf="currentPage + 1 < totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">{{currentPage + 1}}</a>
+        </li>
+        
+        <!-- Show ellipsis if needed after current page -->
+        <li class="page-item disabled" *ngIf="currentPage + 2 < totalPages">
+          <span class="page-link">...</span>
+        </li>
+        
+        <!-- Last page -->
+        <li class="page-item" [class.active]="currentPage === totalPages" *ngIf="totalPages > 1">
+          <a class="page-link" (click)="onPageChange(totalPages)">{{totalPages}}</a>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
