@@ -23,5 +23,13 @@ export class DashboardService {
       params: { timeFrame }
     });
   }
-  
+  getAccountTypeColor(type: string): string {
+    const colors: Record<string, string> = {
+      CHECKING: '#36A2EB',
+      SAVINGS: '#FFCE56',
+      BUSINESS: '#4BC0C0',
+      LOAN: '#FF6384'
+    };
+    return colors[type] || '#CCCCCC';
+  }
 }

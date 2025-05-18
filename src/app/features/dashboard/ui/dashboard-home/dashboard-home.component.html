@@ -3,12 +3,14 @@
     
     <div class="summary-cards">
       <app-card *ngIf="stats$ | async as stats" title="Total Balance" [value]="stats.totalBalance | currency">
-        <span [class.positive]="stats.balanceChange >= 0" [class.negative]="stats.balanceChange < 0">
-          {{ stats.balanceChange >= 0 ? '+' : '' }}{{ stats.balanceChange | percent }}
+        <span [class.positive]="stats.balanceChange! >= 0" [class.negative]="stats.balanceChange! < 0">
+          {{ stats.balanceChange! >= 0 ? '+' : '' }}{{ stats.balanceChange! | percent }}
         </span>
       </app-card>
   
       <app-card *ngIf="stats$ | async as stats" title="Active Accounts" [value]="stats.activeAccounts">
+
+      
         <span>{{ stats.newAccounts }} new</span>
       </app-card>
   

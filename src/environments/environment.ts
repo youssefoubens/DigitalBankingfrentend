@@ -14,7 +14,7 @@ export const environment: Environment = {
     accounts: '/comptes',
     customers: '/customers',
     operations: '/comptes',
-    dashboard: '/dashboard/stats'
+    dashboard: '/dashboard'
   },
 
   defaultTimeout: 30000 // 30 seconds

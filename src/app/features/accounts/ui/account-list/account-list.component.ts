@@ -144,4 +144,24 @@ export class AccountListComponent implements OnInit {
       }
     });
   }
+  getTotalBalance(): number {
+    return this.filteredAccounts.reduce((sum, account) => sum + account.balance, 0);
+  }
+  
+  getPageRange(): number[] {
+    return Array.from({length: this.totalPages}, (_, i) => i + 1);
+  }
+  
+  shouldShowPage(page: number): boolean {
+    // Show first, last, current, and adjacent pages
+    return page === 1 || 
+           page === this.totalPages || 
+           Math.abs(page - this.currentPage) <= 1;
+  }
+  
+  shouldShowEllipsis(page: number): boolean {
+    // Show ellipsis when there's a gap
+    return (page === 2 && this.currentPage > 3) || 
+           (page === this.totalPages - 1 && this.currentPage < this.totalPages - 2);
+  }
 }

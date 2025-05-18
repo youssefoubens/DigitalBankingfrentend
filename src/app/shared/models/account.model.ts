@@ -1,12 +1,14 @@
 export interface BankAccount {
-    id: string;
+  id: string;
+  overdraft: number;
     accountNumber: string;
     type: 'CHECKING' | 'SAVINGS' | 'BUSINESS' | 'LOAN';
     balance: number;
     currency: string;
     status: 'ACTIVE' | 'FROZEN' | 'CLOSED';
     createdAt: Date;
-    customerId: string;
+  customerId: string;
+  customerDTO: any;
     customerName?: string;
   overdraftLimit?: number;
   lastActivity?: Date;

@@ -1,5 +1,5 @@
 export interface AccountOperation {
-    id: string;
+    id: string | number;
     accountId: string;
     type: 'CREDIT' | 'DEBIT' | 'TRANSFER';
     amount: number;

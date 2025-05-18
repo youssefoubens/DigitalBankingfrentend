@@ -23,7 +23,7 @@ export class CustomerDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.customer$ = this.customerService.getCustomer(this.route.snapshot.params['id']);
+    this.customer$ = this.customerService.getCustomer(this.route.snapshot.params['customer_id']);
     
   }
 }
