@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable, map } from 'rxjs';
-
+import { RouterLink } from '@angular/router';
 import { FilterPipe } from '../../../../shared/pipes/filter.pipe';
 import { PhoneFormatPipe } from '../../../../shared/pipes/phone-format.pipe';
 import { Customer } from '../../../../shared/models/customer.model';
@@ -23,7 +21,7 @@ import { CustomerService } from '../../data-access/customer.service';
   styleUrl: './customer-list.component.css'
 })
 export class CustomerListComponent implements OnInit {
-  customers: Customer[] = []; // Changed from Observable to array
+  customers: Customer[] = [];
   filteredCustomers: Customer[] = [];
   pagedCustomers: Customer[] = [];
   searchTerm = '';
@@ -40,9 +38,12 @@ export class CustomerListComponent implements OnInit {
   }
 
   loadCustomers(): void {
-    this.customerService.getAllCustomers().subscribe(customers => {
-      this.customers = customers;
-      this.filterCustomers(); // This will handle the initial filtering and pagination
+    this.customerService.getAllCustomers().subscribe({
+      next: (customers) => {
+        this.customers = customers;
+        this.filterCustomers();
+      },
+      error: (err) => console.error('Failed to load customers', err)
     });
   }
 
@@ -52,10 +53,13 @@ export class CustomerListComponent implements OnInit {
     } else {
       const term = this.searchTerm.toLowerCase();
       this.filteredCustomers = this.customers.filter(customer => 
-        customer.name.toLowerCase().includes(term) ||
-        customer.email.toLowerCase().includes(term) ||
-        customer.phone.toLowerCase().includes(term)
-    )}
+        customer.name?.toLowerCase().includes(term) ||
+        customer.email?.toLowerCase().includes(term) ||
+        customer.phone?.toLowerCase().includes(term) ||
+        customer.city?.toLowerCase().includes(term) ||
+        customer.address?.toLowerCase().includes(term)
+      );
+    }
     
     this.totalPages = Math.ceil(this.filteredCustomers.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to first page when filtering
@@ -75,13 +79,16 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-  deleteCustomer(id: number) {
-    if (confirm('Are you sure you want to delete this customer?')) {
+  deleteCustomer(id: number): void {
+    if (id && confirm('Are you sure you want to delete this customer?')) {
       this.customerService.deleteCustomer(id).subscribe({
         next: () => {
-          this.loadCustomers();
+          this.loadCustomers(); // Refresh the list
         },
-        error: (err) => console.error('Failed to delete customer', err)
+        error: (err) => {
+          console.error('Failed to delete customer:', err);
+          // Show error message to user
+        }
       });
     }
   }

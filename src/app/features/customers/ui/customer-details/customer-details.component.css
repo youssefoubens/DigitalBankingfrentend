@@ -1,0 +1,50 @@
+.customer-details-container {
+    padding: 20px;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.error-container {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.card {
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 24px;
+}
+
+.accounts-section {
+    margin-top: 30px;
+}
+
+.accounts-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.action-buttons {
+    display: flex;
+}
+
+@media (max-width: 576px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .action-buttons .btn {
+        margin-right: 0 !important;
+    }
+}
