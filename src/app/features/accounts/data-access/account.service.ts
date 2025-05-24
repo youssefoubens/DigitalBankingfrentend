@@ -33,4 +33,8 @@ export class AccountService {
   getCustomerAccounts(customerId: string): Observable<BankAccount[]> {
     return this.http.get<BankAccount[]>(`${this.apiUrl}/customer/${customerId}`);
   }
+
+  getAccountsByCustomerId(customerId: number): Observable<BankAccount[]> {
+    return this.http.get<BankAccount[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
 }

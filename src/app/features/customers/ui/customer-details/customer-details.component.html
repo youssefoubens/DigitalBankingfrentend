@@ -76,38 +76,40 @@
         <i class="bi bi-credit-card me-2"></i>
         Associated Accounts
       </h3>
-      <div class="alert alert-info">
-        <i class="bi bi-info-circle-fill me-2"></i>
-        No accounts associated with this customer yet.
-      </div>
-      <!-- Uncomment this when you have account data
-      <table class="table table-hover mt-3">
-        <thead class="table-light">
-          <tr>
-            <th>Account Number</th>
-            <th>Account Type</th>
-            <th>Balance</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let account of customer.accounts">
-            <td>{{ account.accountNumber }}</td>
-            <td>{{ account.type }}</td>
-            <td>{{ account.balance | currency }}</td>
-            <td>
-              <span class="badge" [ngClass]="account.status === 'ACTIVE' ? 'bg-success' : 'bg-secondary'">
-                {{ account.status }}
-              </span>
-            </td>
-            <td>
-              <a [routerLink]="['/accounts', account.id]" class="btn btn-sm btn-primary">View</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      -->
+      
+      <ng-container *ngIf="accounts$ | async as accounts">
+        <div *ngIf="accounts.length === 0" class="alert alert-info">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          No accounts associated with this customer yet.
+        </div>
+        
+        <table *ngIf="accounts.length > 0" class="table table-hover mt-3">
+          <thead class="table-light">
+            <tr>
+              <th>Account Number</th>
+              <th>Account Type</th>
+              <th>Balance</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let account of accounts">
+              <td>{{ account.id }}</td>
+              <td>{{ account.type }}</td>
+              <td>{{ account.balance | currency }}</td>
+              <td>
+                <span class="badge" [ngClass]="account.status === 'ACTIVE' ? 'bg-success' : 'bg-secondary'">
+                  {{ account.status }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/accounts', account.id]" class="btn btn-sm btn-primary">View</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
     </div>
   </div>
 </div>

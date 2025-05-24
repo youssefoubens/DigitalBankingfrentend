@@ -1,10 +1,12 @@
+import { AccountService } from "./../../../accounts/data-access/account.service";
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, of, catchError, throwError } from 'rxjs';
+import { Observable, of, catchError, throwError, map, switchMap } from 'rxjs';
 import { CustomerService } from '../../data-access/customer.service';
 import { Customer } from '../../../../shared/models/customer.model';
 import { PhoneFormatPipe } from '../../../../shared/pipes/phone-format.pipe';
+import { BankAccount } from '../../../../shared/models/account.model';
 
 @Component({
   selector: 'app-customer-details',
@@ -15,13 +17,15 @@ import { PhoneFormatPipe } from '../../../../shared/pipes/phone-format.pipe';
 })
 export class CustomerDetailsComponent implements OnInit {
   customer$!: Observable<Customer>;
+  accounts$!: Observable<BankAccount[]>;
   isLoading = true;
   error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private accountService: AccountService // lowercase 'a' for consistency
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +48,20 @@ export class CustomerDetailsComponent implements OnInit {
         this.error = 'Failed to load customer details. The customer may not exist.';
         this.isLoading = false;
         return throwError(() => error);
+      })
+    );
+    
+    // Load accounts for this customer
+    this.accounts$ = this.accountService.getAccountsByCustomerId(customerId).pipe(
+      catchError(error => {
+        console.error('Failed to load customer accounts:', error);
+        // Don't set error - we just want to show "no accounts" message
+        return of([]);
+      }),
+      // Set isLoading to false when accounts are loaded
+      map(accounts => {
+        this.isLoading = false;
+        return accounts;
       })
     );
   }
