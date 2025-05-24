@@ -1,4 +1,5 @@
 export interface BankAccount {
+  description: any;
   id: string;
   overdraft: number;
     accountNumber: string;
@@ -18,6 +19,7 @@ export interface BankAccount {
   
   // For account creation
   export interface CreateAccountRequest {
+    interestRate: any;
     customerId: string;
     type: 'CHECKING' | 'SAVINGS' | 'BUSINESS' | 'LOAN';
     initialDeposit: number;

@@ -10,7 +10,7 @@ import { BankAccount } from '../../../../shared/models/account.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './transfer-form.component.html',
-  styleUrls: ['./transfer-form.component.scss']
+  styleUrls: ['./transfer-form.component.css']
 })
 export class TransferFormComponent {
   transferRequest = {

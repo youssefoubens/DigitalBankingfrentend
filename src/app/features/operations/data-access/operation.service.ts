@@ -10,7 +10,10 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class OperationService {
-  private apiUrl = `${environment.apiUrl}${environment.endpoints.operations}`;
+  transfer(request: { sourceAccountId: string; targetAccountId: string; amount: string; description: string; }) {
+    throw new Error('Method not implemented.');
+  }
+  private apiUrl = `${environment.apiUrl}${environment.endpoints.accounts}`;
 
   constructor(private http: HttpClient) {}
 

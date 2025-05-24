@@ -1,0 +1,31 @@
+.account-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.card-header {
+    background-color: #3498db !important;
+}
+
+.invalid-feedback {
+    display: block;
+    font-size: 0.875rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-text {
+    font-size: 0.85rem;
+}
+
+/* Improve form spacing */
+.mb-3:last-child {
+    margin-bottom: 0 !important;
+}

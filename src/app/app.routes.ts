@@ -66,6 +66,11 @@ export const routes: Routes = [
             path: ':id',
             loadComponent: () => import('./features/accounts/ui/account-details/account-details.component')
               .then(m => m.AccountDetailsComponent)
+          },
+          {
+            path: ':id/edit', // ✅ corrected to include the id
+            loadComponent: () => import('./features/accounts/ui/account-form/account-form.component')
+              .then(m => m.AccountFormComponent)
           }
         ]
       },
@@ -84,6 +89,17 @@ export const routes: Routes = [
             loadComponent: () => import('./features/operations/ui/operation-list/operation-list.component')
               .then(m => m.OperationListComponent)
           }
+        ]
+      },
+      {
+        path: 'transactions',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/operations/ui/transfer-form/transfer-form.component')
+              .then(m => m.TransferFormComponent)
+          },
+         
         ]
       },
       
