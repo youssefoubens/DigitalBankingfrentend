@@ -21,10 +21,19 @@ import { DashboardStats } from '../../../../shared/models/dashboard.model';
 })
 export class DashboardHomeComponent implements OnInit {
   stats$?: Observable<DashboardStats>;
+  // Add Math to expose it to the template
+  Math = Math;
 
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit() {
-    this.stats$ = this.dashboardService.getDashboardStats();
+    // Get data for the current month
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    this.stats$ = this.dashboardService.getDashboardStats({
+      start: startOfMonth,
+      end: today
+    });
   }
 }

@@ -65,19 +65,23 @@ export class AccountStatsComponent implements OnInit {
 
   loadAccountStats(): void {
     this.isLoading = true;
+    
+    // Get stats for all time (no date filtering)
     this.dashboardService.getAccountStats()
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (stats) => {
-          this.doughnutChartLabels = stats.map(stat => stat.type);
-          this.doughnutChartData = {
-            labels: this.doughnutChartLabels,
-            datasets: [{
-              data: stats.map(stat => stat.count),
-              backgroundColor: stats.map(stat => this.dashboardService.getAccountTypeColor(stat.type)),
-              borderWidth: 1
-            }]
-          };
+          if (stats && stats.length > 0) {
+            this.doughnutChartLabels = stats.map(stat => stat.type);
+            this.doughnutChartData = {
+              labels: this.doughnutChartLabels,
+              datasets: [{
+                data: stats.map(stat => stat.count),
+                backgroundColor: stats.map(stat => this.dashboardService.getAccountTypeColor(stat.type)),
+                borderWidth: 1
+              }]
+            };
+          }
         },
         error: (err) => console.error('Failed to load account stats', err)
       });

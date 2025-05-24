@@ -1,6 +1,37 @@
 <div class="chart-container">
-  <h3>Transaction Activity</h3>
-  <div class="chart-wrapper">
+  <div class="chart-header d-flex justify-content-between align-items-center mb-3">
+    <h3>Transaction Activity</h3>
+    <div class="btn-group">
+      <button 
+        (click)="changeTimeFrame('daily')" 
+        class="btn btn-sm" 
+        [class.btn-primary]="timeFrame === 'daily'"
+        [class.btn-outline-primary]="timeFrame !== 'daily'">
+        Daily
+      </button>
+      <button 
+        (click)="changeTimeFrame('weekly')" 
+        class="btn btn-sm" 
+        [class.btn-primary]="timeFrame === 'weekly'"
+        [class.btn-outline-primary]="timeFrame !== 'weekly'">
+        Weekly
+      </button>
+      <button 
+        (click)="changeTimeFrame('monthly')" 
+        class="btn btn-sm" 
+        [class.btn-primary]="timeFrame === 'monthly'"
+        [class.btn-outline-primary]="timeFrame !== 'monthly'">
+        Monthly
+      </button>
+    </div>
+  </div>
+  
+  <div class="chart-wrapper" style="position: relative; height: 300px;">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <canvas 
       baseChart
       [data]="chartData"

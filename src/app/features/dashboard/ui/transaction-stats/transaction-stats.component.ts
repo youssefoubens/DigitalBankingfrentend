@@ -14,7 +14,8 @@ import { finalize } from 'rxjs/operators';
 })
 export class TransactionStatsComponent implements OnInit {
   public isLoading = true;
-  public timeFrame: 'daily' | 'weekly' | 'monthly' = 'weekly';
+  public timeFrame: 'daily' | 'weekly' | 'monthly' = 'daily';
+  
   public chartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: [
@@ -84,23 +85,26 @@ export class TransactionStatsComponent implements OnInit {
 
   loadTransactionStats(): void {
     this.isLoading = true;
+    
     this.dashboardService.getTransactionStats(this.timeFrame)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (stats) => {
-          this.chartData = {
-            labels: stats.dates,
-            datasets: [
-              {
-                ...this.chartData.datasets[0],
-                data: stats.deposits
-              },
-              {
-                ...this.chartData.datasets[1],
-                data: stats.withdrawals
-              }
-            ]
-          };
+          if (stats && stats.dates) {
+            this.chartData = {
+              labels: stats.dates,
+              datasets: [
+                {
+                  ...this.chartData.datasets[0],
+                  data: stats.deposits
+                },
+                {
+                  ...this.chartData.datasets[1],
+                  data: stats.withdrawals
+                }
+              ]
+            };
+          }
         },
         error: (err) => console.error('Failed to load transaction stats', err)
       });
