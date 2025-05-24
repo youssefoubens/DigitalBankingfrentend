@@ -1,41 +1,83 @@
 <div class="auth-container">
-    <form (ngSubmit)="onSubmit()" class="auth-form">
-      <h2>Bank Login</h2>
-      
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-  
-      <div class="form-group">
-        <label for="email">Email</label>
+  <div class="auth-card">
+    <h2 class="auth-title">Digital Banking Login</h2>
+    
+    <!-- Messages -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      {{ errorMessage }}
+    </div>
+    
+    <div *ngIf="successMessage" class="alert alert-success">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      {{ successMessage }}
+    </div>
+    
+    <!-- Login Form -->
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <!-- Username field -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
         <input 
-          type="email" 
-          id="email" 
-          [(ngModel)]="credentials.email" 
-          name="email"
-          required
-        >
+          type="text"
+          class="form-control" 
+          id="username" 
+          name="username"
+          [(ngModel)]="loginRequest.username" 
+          required>
       </div>
-  
-      <div class="form-group">
-        <label for="password">Password</label>
+      
+      <!-- Password field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
         <input 
           type="password" 
+          class="form-control" 
           id="password" 
-          [(ngModel)]="credentials.password" 
           name="password"
-          required
-        >
+          [(ngModel)]="loginRequest.password" 
+          required>
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+      
+      <!-- Submit button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary w-100" 
+        [disabled]="loginForm.invalid || isLoading">
         <span *ngIf="!isLoading">Login</span>
-        <span *ngIf="isLoading">Logging in...</span>
+        <span *ngIf="isLoading">
+          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+          Logging in...
+        </span>
       </button>
-  
-      <div class="auth-footer">
-        <a routerLink="/register">Create an account</a>
-        <a routerLink="/forgot-password">Forgot password?</a>
-      </div>
     </form>
+    
+    <!-- Links -->
+    <div class="mt-3 text-center">
+      <p>Don't have an account? <a routerLink="/register">Register</a></p>
+    </div>
+
+    <!-- Debug information -->
+    <div class="mt-4 small text-muted" *ngIf="isDebug">
+      <hr>
+      <p>Debug Info:</p>
+      <pre>{{ loginRequest | json }}</pre>
+    </div>
+
+    <!-- Debug Tools -->
+    <div *ngIf="isDebug" class="mt-3">
+      <hr>
+      <h5>Debug Tools</h5>
+      <div class="mb-2">
+        <button type="button" class="btn btn-sm btn-info me-2" 
+                (click)="checkAuthState()">Check Auth State</button>
+        <button type="button" class="btn btn-sm btn-warning" 
+                (click)="clearStorage()">Clear Storage</button>
+      </div>
+      <div class="small text-muted">
+        <p>Auth status: {{ authService.isAuthenticated ? 'Authenticated' : 'Not authenticated' }}</p>
+        <p *ngIf="debugToken">Token: {{ debugToken }}</p>
+      </div>
+    </div>
   </div>
+</div>

@@ -1,21 +1,29 @@
-import { Environment } from './environment.interface';
+export interface Environment {
+  production: boolean;
+  apiUrl: string;
+  endpoints: {
+    accounts: string;
+    customers: string;
+    operations: string;
+    dashboard: string;
+    auth: {
+      loginPath: string;
+      registerPath: string;
+    };
+  };
+}
 
 export const environment: Environment = {
   production: false,
-  apiUrl: 'http://localhost:8085', // Your Spring Boot backend URL
-  
-  auth: {
-    loginPath: '/auth/login',
-    registerPath: '/auth/register',
-    refreshTokenPath: '/auth/refresh-token'
-  },
-
+  apiUrl: 'http://localhost:8085', // Update with your actual backend URL
   endpoints: {
     accounts: '/comptes',
     customers: '/customers',
-    operations: '/comptes',
-    dashboard: '/dashboard'
-  },
-
-  defaultTimeout: 30000 // 30 seconds
+    operations: '/operations',
+    dashboard: '/dashboard',
+    auth: {
+      loginPath: '/api/auth/login',
+      registerPath: '/api/auth/register'
+    }
+  }
 };

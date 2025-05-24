@@ -14,7 +14,7 @@ import { CustomerService } from '../../data-access/customer.service';
     CommonModule, 
     FormsModule, 
     RouterLink,
-    FilterPipe,
+  
     PhoneFormatPipe
   ],
   templateUrl: './customer-list.component.html',

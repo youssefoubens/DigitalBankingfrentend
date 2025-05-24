@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../data-access/auth.service';
+import { RegisterRequest } from '../../../shared/models/auth.model';
 
 @Component({
   selector: 'app-register',
@@ -12,23 +13,29 @@ import { AuthService } from '../data-access/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  userData = { 
-    name: '', 
-    email: '', 
+  registerRequest: RegisterRequest = {
+    name: '',
+    email: '',
     password: '',
-    confirmPassword: '',
-    phone: '' 
+    phone: ''
   };
+  confirmPassword = '';
   isLoading = false;
   errorMessage = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    // Redirect if already logged in
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
-  onSubmit() {
-    if (this.userData.password !== this.userData.confirmPassword) {
+  onSubmit(): void {
+    // Check if passwords match
+    if (this.registerRequest.password !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match';
       return;
     }
@@ -36,16 +43,13 @@ export class RegisterComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { confirmPassword, ...registrationData } = this.userData;
-
-    this.authService.register(registrationData).subscribe({
+    this.authService.register(this.registerRequest).subscribe({
       next: () => {
-        this.router.navigate(['/login'], {
-          queryParams: { registered: true }
-        });
+        // Registration automatically logs in the user
+        this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Registration failed';
+      error: (error) => {
+        this.errorMessage = error.message || 'Registration failed. Please try again.';
         this.isLoading = false;
       },
       complete: () => {

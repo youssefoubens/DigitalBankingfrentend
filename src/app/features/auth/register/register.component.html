@@ -1,74 +1,93 @@
 <div class="auth-container">
-    <form (ngSubmit)="onSubmit()" class="auth-form">
-      <h2>Create Bank Account</h2>
-      
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-  
-      <div class="form-group">
-        <label for="name">Full Name</label>
+  <div class="auth-card">
+    <h2 class="auth-title">Create Account</h2>
+    
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      {{ errorMessage }}
+    </div>
+    
+    <!-- Registration Form -->
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <!-- Name field -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
         <input 
           type="text" 
+          class="form-control" 
           id="name" 
-          [(ngModel)]="userData.name" 
           name="name"
-          required
-        >
+          [(ngModel)]="registerRequest.name" 
+          required>
       </div>
-  
-      <div class="form-group">
-        <label for="email">Email</label>
+      
+      <!-- Email field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
         <input 
           type="email" 
+          class="form-control" 
           id="email" 
-          [(ngModel)]="userData.email" 
           name="email"
-          required
-        >
+          [(ngModel)]="registerRequest.email" 
+          required 
+          email>
       </div>
-  
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
+      
+      <!-- Phone field -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
         <input 
           type="tel" 
+          class="form-control" 
           id="phone" 
-          [(ngModel)]="userData.phone" 
           name="phone"
-          required
-        >
+          [(ngModel)]="registerRequest.phone" 
+          required>
       </div>
-  
-      <div class="form-group">
-        <label for="password">Password</label>
+      
+      <!-- Password field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
         <input 
           type="password" 
+          class="form-control" 
           id="password" 
-          [(ngModel)]="userData.password" 
           name="password"
-          required
-          minlength="8"
-        >
+          [(ngModel)]="registerRequest.password" 
+          required 
+          minlength="8">
       </div>
-  
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
+      
+      <!-- Confirm Password field -->
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
         <input 
           type="password" 
+          class="form-control" 
           id="confirmPassword" 
-          [(ngModel)]="userData.confirmPassword" 
           name="confirmPassword"
-          required
-        >
+          [(ngModel)]="confirmPassword" 
+          required>
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+      
+      <!-- Submit button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary w-100" 
+        [disabled]="registerForm.invalid || isLoading">
         <span *ngIf="!isLoading">Register</span>
-        <span *ngIf="isLoading">Creating account...</span>
+        <span *ngIf="isLoading">
+          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+          Creating Account...
+        </span>
       </button>
-  
-      <div class="auth-footer">
-        <a routerLink="/login">Already have an account? Login</a>
-      </div>
     </form>
+    
+    <!-- Links -->
+    <div class="mt-3 text-center">
+      <p>Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
   </div>
+</div>
