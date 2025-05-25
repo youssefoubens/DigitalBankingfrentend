@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OperationService } from '../../data-access/operation.service';
@@ -12,10 +12,11 @@ import { BankAccount } from '../../../../shared/models/account.model';
   templateUrl: './transfer-form.component.html',
   styleUrls: ['./transfer-form.component.css']
 })
-export class TransferFormComponent {
+export class TransferFormComponent implements OnInit {
+  // Update property names to match API requirements
   transferRequest = {
-    sourceAccountId: '',
-    targetAccountId: '',
+    accountSource: 0,      // Changed from sourceAccount to match API
+    accountDestination: 0, // Changed from targetAccount to match API
     amount: 0,
     description: 'Funds Transfer'
   };
@@ -42,8 +43,8 @@ export class TransferFormComponent {
   }
 
   submitTransfer() {
-    if (this.transferRequest.sourceAccountId === this.transferRequest.targetAccountId) {
-      this.errorMessage = 'Source and target accounts cannot be the same';
+    if (this.transferRequest.accountSource === this.transferRequest.accountDestination) {
+      this.errorMessage = 'Source and destination accounts cannot be the same';
       return;
     }
 
@@ -51,10 +52,22 @@ export class TransferFormComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    this.operationService.transferFunds(this.transferRequest).subscribe({
+    // Convert string IDs to numbers for the API
+    const requestPayload = {
+      accountSource: Number(this.transferRequest.accountSource),
+      accountDestination: Number(this.transferRequest.accountDestination),
+      amount: Number(this.transferRequest.amount),
+      description: this.transferRequest.description
+    };
+
+    console.log('Sending transfer request:', requestPayload);
+
+    this.operationService.transferFunds(requestPayload).subscribe({
       next: () => {
         this.successMessage = 'Transfer completed successfully';
         this.resetForm();
+        // Reload accounts to refresh balances
+        this.loadAccounts();
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Transfer failed';
@@ -68,8 +81,8 @@ export class TransferFormComponent {
 
   resetForm() {
     this.transferRequest = {
-      sourceAccountId: '',
-      targetAccountId: '',
+      accountSource: 0,
+      accountDestination: 0,
       amount: 0,
       description: 'Funds Transfer'
     };

@@ -7,6 +7,7 @@ import {
   DebitRequest, 
   TransferRequest 
 } from '../../../shared/models/operation.model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class OperationService {
@@ -29,7 +30,17 @@ export class OperationService {
     return this.http.post(`${this.apiUrl}/debit`, request);
   }
 
-  transferFunds(request: TransferRequest) {
-    return this.http.post(`${this.apiUrl}/transfer`, request);
+  transferFunds(transferData: any): Observable<any> {
+    // Ensure the payload matches exactly what the API expects
+    const payload = {
+      accountSource: Number(transferData.accountSource),
+      accountDestination: Number(transferData.accountDestination),
+      amount: Number(transferData.amount),
+      description: transferData.description
+    };
+    
+    console.log('Sending transfer payload:', payload);
+    
+    return this.http.post(`${this.apiUrl}/transfer`, payload);
   }
 }

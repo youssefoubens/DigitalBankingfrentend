@@ -22,8 +22,8 @@ export interface AccountOperation {
   }
   
   export interface TransferRequest {
-    sourceAccountId: string;
-    targetAccountId: string;
+    sourceAccount: number;
+    targetAccount: number;
     amount: number;
     description: string;
   }
