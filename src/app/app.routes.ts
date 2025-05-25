@@ -88,6 +88,16 @@ export const routes: Routes = [
             path: ':accountId',
             loadComponent: () => import('./features/operations/ui/operation-list/operation-list.component')
               .then(m => m.OperationListComponent)
+          },
+          {
+            path: 'credit',
+            loadComponent: () => import('./features/operations/ui/credit-form/credit-form.component')
+              .then(m => m.CreditFormComponent)
+          },
+          {
+            path: 'debit',
+            loadComponent: () => import('./features/operations/ui/debit-form/debit-form.component')
+              .then(m => m.DebitFormComponent)
           }
         ]
       },
